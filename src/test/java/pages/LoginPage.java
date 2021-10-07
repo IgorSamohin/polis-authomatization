@@ -1,15 +1,18 @@
 package pages;
 
-import org.openqa.selenium.By;
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.$x;
 import pages.base.BasePage;
 
 public class LoginPage extends BasePage {
-    private final static By LOGIN_FIELD_LOCATOR = By.xpath("//*[@data-l='t,login' and @type='text']");
-    private final static By PASSWORD_FIELD_LOCATOR = By.xpath("//*[@data-l='t,password' and @type='password']");
-    private final static By LOGIN_BUTTON_LOCATOR = By.xpath("//*[@data-l='t,sign_in' and @type='submit']");
+    private final static String LOGIN_FIELD_LOCATOR = "//*[@data-l='t,login' and @type='text']";
+    private final static String PASSWORD_FIELD_LOCATOR = "//*[@data-l='t,password' and @type='password']";
+    private final static String LOGIN_BUTTON_LOCATOR = "//*[@data-l='t,sign_in' and @type='submit']";
 
-    public UserMainPage login(String login, String password){
-        //todo
+    public UserMainPage login(String login, String password) {
+        $x(LOGIN_FIELD_LOCATOR).shouldBe(visible).sendKeys(login);
+        $x(PASSWORD_FIELD_LOCATOR).shouldBe(visible).sendKeys(password);
+        $x(LOGIN_BUTTON_LOCATOR).shouldBe(visible).click();
         return new UserMainPage();
     }
 }
