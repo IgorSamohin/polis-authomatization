@@ -1,10 +1,9 @@
 package pages.base;
 
-
 import pages.LoginPage;
-import pages.music.MusicMainPage;
 import pages.ToolBar;
 import pages.UserMainPage;
+import pages.music.MusicMainPage;
 
 public class LoggedUserBasePage extends BasePage {
     private final ToolBar toolBar = new ToolBar();
