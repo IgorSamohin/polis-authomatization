@@ -1,22 +1,30 @@
 package tests;
 
-import com.codeborne.selenide.Configuration;
-import static com.codeborne.selenide.Selenide.$;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.openqa.selenium.WebElement;
+import static com.codeborne.selenide.Selenide.closeWebDriver;
+import static com.codeborne.selenide.Selenide.open;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import pages.LoginPage;
+import pages.UserMainPage;
+import tools.Bots;
 
 public class TestBase {
-    Configuration configuration;
+    public static final String OK_RU_URL = "https:/ok.ru";
+    protected UserMainPage userMainPage;
 
-    @BeforeAll
+    @BeforeEach
     public void before() {
+        open(OK_RU_URL);
+        Bots bot = Bots.getBot();
+        LoginPage currentPage = new LoginPage();
+        userMainPage = currentPage.login(bot.getLogin(), bot.getPassword());
 
+        userMainPage.clickOnMusicMainPage().clickOnMusicMainPage();
     }
 
-    @AfterAll
-    public void test() {
-
+    @AfterEach
+    public void after() {
+        (new UserMainPage()).doLogout();
+        closeWebDriver();
     }
 }
