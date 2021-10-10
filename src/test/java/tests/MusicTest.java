@@ -4,7 +4,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import pages.music.MusicBasePage;
 
+
 class MusicTest extends TestBase {
+
     @Test
     public void addSongToMyMusic() {
         MusicBasePage musicMainPage = (MusicBasePage) this.userMainPage
