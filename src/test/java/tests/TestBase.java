@@ -18,8 +18,6 @@ public class TestBase {
         Bots bot = Bots.getBot();
         LoginPage currentPage = new LoginPage();
         userMainPage = currentPage.login(bot.getLogin(), bot.getPassword());
-
-        userMainPage.clickOnMusicMainPage().clickOnMusicMainPage();
     }
 
     @AfterEach
