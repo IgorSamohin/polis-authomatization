@@ -1,8 +1,9 @@
 package pages;
 
+import pages.base.BasePage;
+
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$x;
-import pages.base.BasePage;
 
 public class LoginPage extends BasePage {
     private final static String LOGIN_FIELD_LOCATOR = "//*[@data-l='t,login' and @type='text']";

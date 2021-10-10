@@ -1,38 +1,45 @@
 package tests;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import pages.music.MusicBasePage;
-
+import pages.music.MusicMainPage;
+import pages.music.MusicTrack;
 
 class MusicTest extends TestBase {
 
     @Test
     public void addSongToMyMusic() {
-        MusicBasePage musicMainPage = (MusicBasePage) this.userMainPage
+        // Тут почему-то музыка открывается-закрывается-открывается. Не могу понять почему так
+        MusicMainPage musicMainPage = (MusicMainPage) this.userMainPage
                 .clickOnMusicMainPage();
-//                .переход к "Для вас"
-//
-//        Track track = musicMainPage
-//                .взятие списка песен
-//                .взятие первой песни
-//
-//        track
-//                .добавление песни в мою музыку
 
+        MusicTrack track = musicMainPage.
+                clickOnMusicForYou()
+                .getMusicList()
+                .getTrack(0);
 
-//        List<Track> tracks = musicMainPage
-//                .переход в "Моя музыка"
-//                .взятие списка песен
+        track.addTrackToFavorite();
+        String trackData = track.getText();
 
-//        for (Track t: tracks) {
-//             поиск в списке песни с такими же данными, которые сохранили
-//        }
+        Assertions.assertTrue(musicMainPage
+                .clickOnMyMusic()
+                .isCurrentTrack(trackData)
+        );
     }
 
     @AfterEach
-    public void clean(){
-        //перейти к моей музыке
-        //удалить все треки оттуда
+    public void clean() {
+        // Почему-то происходит двойное нажатие на музыку (как в самом тесте, но тут музыка не открывается вообще).
+        // Пришлось сделать вот так, чтобы музыка точно открылась
+        MusicMainPage musicMainPage = (MusicMainPage) this.userMainPage
+                .clickOnMusicMainPage()
+                .clickOnUserMainPage()
+                .clickOnMusicMainPage();
+
+        musicMainPage
+                .clickOnMyMusic()
+                .getMusicList()
+                .deleteAllTracks();
     }
 }

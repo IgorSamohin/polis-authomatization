@@ -1,7 +1,6 @@
-package pages.Music;
+package pages.music;
 
-public class MyMusicPage extends MusicMainPage {
-
+public class ForYouMusicPage extends MusicMainPage {
     public MusicList getMusicList() {
         return new MusicList();
     }
