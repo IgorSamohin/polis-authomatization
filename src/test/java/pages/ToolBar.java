@@ -22,13 +22,13 @@ public class ToolBar extends BasePage {
     }
 
     public UserMainPage clickOnUserMainPage() {
-        $x(LOGO_BUTTON_LOCATOR).shouldBe(visible).click();
+        $x(LOGO_BUTTON_LOCATOR).shouldBe(visible.because(IT_MUST_BE_VISIBLE_MESSAGE)).click();
         return new UserMainPage();
     }
 
     public LoginPage doLogout() {
-        $x(U_CARD_MINI).shouldBe(visible).click();
-        $x(LOG_OUT_BUTTON_IN_U_CARD_MINI).shouldBe(visible).click();
+        $x(U_CARD_MINI).shouldBe(visible.because(IT_MUST_BE_VISIBLE_MESSAGE)).click();
+        $x(LOG_OUT_BUTTON_IN_U_CARD_MINI).shouldBe(visible.because(IT_MUST_BE_VISIBLE_MESSAGE)).click();
         SelenideElement confirmPopUp = $x(LOG_OUT_SUBMIT_BUTTON);
         if (confirmPopUp.isDisplayed()) {
             confirmPopUp.click();
