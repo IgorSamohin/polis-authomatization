@@ -5,7 +5,7 @@ import com.codeborne.selenide.SelenideElement;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.actions;
 
 public class MusicList extends MusicMainPage {
@@ -13,7 +13,7 @@ public class MusicList extends MusicMainPage {
     private List<SelenideElement> list = new ArrayList<>();
 
     public MusicList() {
-        list.addAll($$(MUSIC_LIST));
+        list.addAll($$x(MUSIC_LIST));
     }
 
     public MusicTrack getTrack(int index) {

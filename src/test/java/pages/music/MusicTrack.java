@@ -1,5 +1,6 @@
 package pages.music;
 
+import static com.codeborne.selenide.Selenide.$x;
 import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Selenide.actions;
@@ -16,12 +17,12 @@ public class MusicTrack {
 
     public void addTrackToFavorite() {
         actions().moveToElement(track).build().perform();
-        track.$(ADD_MUSIC_TO_MY_MUSIC).click();
+        $x(ADD_MUSIC_TO_MY_MUSIC).click();
     }
 
     public void removeTrackFromFavorite() {
         actions().moveToElement(track).build().perform();
-        track.$(REMOVE_MUSIC_FROM_MY_MUSIC).click();
+        $x(REMOVE_MUSIC_FROM_MY_MUSIC).click();
     }
 
     public String getText() {
