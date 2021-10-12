@@ -23,7 +23,8 @@ class MusicTest extends TestBase {
 
         Assertions.assertTrue(musicMainPage
                 .clickOnMyMusic()
-                .isCurrentTrack(trackData)
+                .getMusicList()
+                .findAddedElement(trackData)
         );
     }
 
