@@ -6,8 +6,8 @@ import com.codeborne.selenide.SelenideElement;
 import static com.codeborne.selenide.Selenide.actions;
 
 public class MusicTrack {
-    private static final String ADD_MUSIC_TO_MY_MUSIC = "//*[@name='controls']//*[@data-l='t,add']";
-    private static final String REMOVE_MUSIC_FROM_MY_MUSIC = "//*[@name='controls']//*[@data-tsid='remove_track']";
+    private static final String ADD_MUSIC_TO_MY_MUSIC = "//*[@data-l='t,add' and @data-tsid='track_add']";
+    private static final String REMOVE_MUSIC_FROM_MY_MUSIC = "//*[@data-tsid='remove_track' and @icon='close']";
 
     private SelenideElement track;
 

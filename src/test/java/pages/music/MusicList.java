@@ -9,7 +9,7 @@ import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.actions;
 
 public class MusicList extends MusicMainPage {
-    private static final String MUSIC_LIST = "//wm-tracks-list//wm-track";
+    private static final String MUSIC_LIST = "//wm-track";
     private List<SelenideElement> list = new ArrayList<>();
 
     public MusicList() {
