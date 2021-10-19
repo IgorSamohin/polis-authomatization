@@ -1,39 +1,48 @@
 package pages.music;
 
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.codeborne.selenide.Selenide.$$x;
-import static com.codeborne.selenide.Selenide.actions;
+import pages.music.tracks.BaseMusicTrack;
 
-public class MusicList extends MusicMainPage {
-    private static final String MUSIC_LIST = "//wm-track";
-    private List<SelenideElement> list = new ArrayList<>();
+public class MusicList<T extends BaseMusicTrack> extends MusicMainPage {
+    private static final String MUSIC_LIST = "//wm-tracks-list//wm-track";
+    private final List<T> list = new ArrayList<>();
 
-    public MusicList() {
-        list.addAll($$x(MUSIC_LIST));
-    }
+    public MusicList(Class<? extends T> impl) throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+        Constructor<? extends T> constructor = impl.getDeclaredConstructor(SelenideElement.class);
+        ElementsCollection selenideElements = $$x(MUSIC_LIST);
 
-    public MusicTrack getTrack(int index) {
-        return new MusicTrack(list.get(index));
-    }
-
-    public void deleteAllTracks() {
-        for (SelenideElement track : list) {
-            new MusicTrack(track).removeTrackFromFavorite();
+        for (SelenideElement element : selenideElements) {
+            T track = constructor.newInstance(element);
+            list.add(track);
         }
     }
 
-    public boolean findAddedElement(String trackData) {
-        for (SelenideElement webElement : list) {
+    public BaseMusicTrack getTrack(int index) {
+        return list.get(index);
+    }
+
+    public int size() {
+        return list.size();
+    }
+
+    public boolean findBy(String trackData) {
+        for (BaseMusicTrack track : list) {
             //Чтобы текста песен совпадали нужно чтоли и там и там был hover на них, либо его не было нигде
             //Я решил сделать, чтобы он был и там и там
-            actions().moveToElement(webElement).build().perform();
-            if (trackData.equals(webElement.getText()))
+            track.hover();
+            if (trackData.equals(track.getText())) {
                 return true;
+            }
         }
+
         return false;
     }
 }

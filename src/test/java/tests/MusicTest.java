@@ -1,19 +1,21 @@
 package tests;
 
+import static com.codeborne.selenide.Selenide.open;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import pages.UserMainPage;
 import pages.music.MusicMainPage;
-import pages.music.MusicTrack;
+import pages.music.tracks.MusicTrack;
 
 class MusicTest extends TestBase {
 
     @Test
-    public void addSongToMyMusic() {
-        MusicMainPage musicMainPage = (MusicMainPage) this.userMainPage
+    public void addSongToMyMusic() throws Exception {
+        MusicMainPage musicMainPage = (MusicMainPage) new UserMainPage()
                 .clickOnMusicMainPage();
 
-        MusicTrack track = musicMainPage
+        MusicTrack track = (MusicTrack) musicMainPage
                 .clickOnMusicForYou()
                 .getMusicList()
                 .getTrack(0);
@@ -24,19 +26,19 @@ class MusicTest extends TestBase {
         Assertions.assertTrue(musicMainPage
                 .clickOnMyMusic()
                 .getMusicList()
-                .findAddedElement(trackData)
+                .findBy(trackData)
         );
     }
 
     @AfterEach
-    public void clean() {
-        MusicMainPage musicMainPage = (MusicMainPage) this.userMainPage
+    public void clean() throws Exception {
+        open(OK_RU_URL);
+        MusicMainPage musicMainPage = (MusicMainPage) new UserMainPage()
                 .clickOnUserMainPage()
                 .clickOnMusicMainPage();
 
         musicMainPage
                 .clickOnMyMusic()
-                .getMusicList()
                 .deleteAllTracks();
     }
 }
