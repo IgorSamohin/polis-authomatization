@@ -10,18 +10,18 @@ import tools.Bots;
 
 public class TestBase {
     public static final String OK_RU_URL = "https:/ok.ru";
-    protected UserMainPage userMainPage;
 
     @BeforeEach
     public void before() {
         open(OK_RU_URL);
         Bots bot = Bots.getBot();
         LoginPage currentPage = new LoginPage();
-        userMainPage = currentPage.login(bot.getLogin(), bot.getPassword());
+        currentPage.login(bot.getLogin(), bot.getPassword());
     }
 
     @AfterEach
     public void after() {
+        open(OK_RU_URL);
         (new UserMainPage()).doLogout();
         closeWebDriver();
     }
