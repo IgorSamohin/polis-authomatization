@@ -15,6 +15,18 @@ import java.util.List;
 
 public class MusicQueueTest extends TestBase {
 
+    /**
+     * Заходит в "Музыку" -> в раздел "Для вас";
+     * <p>
+     * Нажимает на первый трек, чтобы поставить весь раздел "Для вас" в очередь.
+     * <p>
+     * Заходит в очередь.
+     * <p>
+     * Собирает данных о треках в очереди.
+     * <p>
+     * Проверяет, что при переключении на следующий трек в плеере начинает проигрываться именно тот трек, который
+     * идет следующим в очереди.
+     */
     @Test
     public void queueTest()
             throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
