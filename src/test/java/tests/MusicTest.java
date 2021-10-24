@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import pages.UserMainPage;
 import pages.music.MusicMainPage;
 import pages.music.tracks.MusicTrack;
+import pages.music.tracks.TrackData;
 
 class MusicTest extends TestBase {
 
@@ -21,7 +22,7 @@ class MusicTest extends TestBase {
                 .getTrack(0);
 
         track.addTrackToFavorite();
-        String trackData = track.getText();
+        TrackData trackData = track.getTrackData();
 
         Assertions.assertTrue(musicMainPage
                 .clickOnMyMusic()

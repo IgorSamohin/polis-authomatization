@@ -5,6 +5,7 @@ import pages.base.LoggedUserBasePage;
 import static com.codeborne.selenide.Selenide.$x;
 import pages.music.tracks.BaseMusicTrack;
 import pages.music.tracks.MusicTrack;
+import pages.music.tracks.TrackData;
 import pages.music.util.MusicPlayer;
 
 import java.lang.reflect.InvocationTargetException;
@@ -41,19 +42,21 @@ public class MusicMainPage extends LoggedUserBasePage {
         player.clickOnPrevTrackButton();
     }
 
-    public void clickOnNextTrackButton() {
+    public MusicMainPage clickOnNextTrackButton() {
         player.clickOnNextTrackButton();
+        return new MusicMainPage();
     }
 
-    public void clickOnPlayPauseButton() {
+    public MusicMainPage clickOnPlayPauseButton() {
         player.clickOnPlayPauseButton();
+        return new MusicMainPage();
     }
 
     public MusicQueuePage goToQueuePage() {
         return player.goToQueuePage();
     }
 
-    public String getCurrentTrackData() {
+    public TrackData getCurrentTrackData() {
         return player.getCurrentTrackData();
     }
 

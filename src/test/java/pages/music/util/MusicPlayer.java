@@ -5,8 +5,13 @@ import com.codeborne.selenide.SelenideElement;
 import pages.base.BasePage;
 import pages.music.MusicQueuePage;
 import pages.music.MusicSearchPage;
+import pages.music.tracks.MusicPlayerTrack;
+import pages.music.tracks.TrackData;
 
 public class MusicPlayer extends BasePage {
+
+    public final static String LAYER_LOCATOR = "//music-layer//header";
+
     public final static String FORWARD_BUTTON_LOCATOR = "//*[@data-tsid='forward_button']";
     public final static String PLAY_BUTTON_LOCATOR = "//*[@data-tsid='play_button']";
     public final static String PAUSE_BUTTON_LOCATOR = "//*[@data-tsid='pause_button']";
@@ -44,8 +49,8 @@ public class MusicPlayer extends BasePage {
         return new MusicQueuePage();
     }
 
-    public String getCurrentTrackData() {
-        return $x(CURRENT_TRACK_LOCATOR).text();
+    public TrackData getCurrentTrackData() {
+        return new MusicPlayerTrack($x(LAYER_LOCATOR)).getTrackData();
     }
 
     public double getCurrentTrackProgress() {
