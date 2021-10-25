@@ -6,7 +6,6 @@ import com.codeborne.selenide.SelenideElement;
 import java.util.Date;
 
 public class MusicPlayerTrack extends BaseMusicTrack {
-    //    private final static String CURRENT_TRACK_LOCATOR = "//*[@data-tsid='playing_track']//wm-card-details";
     private static final String TRACK_DURATION_LOCATOR = ".//wm-player-duration";
 
     private static final String TRACK_COVER_LOCATOR = ".//*[@class='cover']";
@@ -19,7 +18,7 @@ public class MusicPlayerTrack extends BaseMusicTrack {
 
     @Override
     public String getDuration() {
-        String duration = track.$x(TRACK_DURATION_LOCATOR).getAttribute("duration");
+        String duration = track.$x(getTrackDurationLocator()).getAttribute("duration");
         assert duration != null;
 
         int i = (int) Double.parseDouble(duration);
@@ -28,24 +27,23 @@ public class MusicPlayerTrack extends BaseMusicTrack {
     }
 
     @Override
-    public BaseMusicTrack clickOnCover() {
-        track.$x(TRACK_COVER_LOCATOR).click();
-        return this;
+    protected String getTrackDurationLocator() {
+        return TRACK_DURATION_LOCATOR;
     }
 
     @Override
-    public String getTitle() {
-        return track.$x(TRACK_NAME_LOCATOR).getText();
+    protected String getTrackCoverLocator() {
+        return TRACK_COVER_LOCATOR;
     }
 
     @Override
-    public String getArtist() {
-        ElementsCollection selenideElements = track.$$x(TRACK_ARTIST_LOCATOR);
-        StringBuilder result = new StringBuilder();
-        for (SelenideElement selenideElement : selenideElements) {
-            result.append(selenideElement.getText());
-        }
-        return result.toString();
+    protected String getTrackNameLocator() {
+        return TRACK_NAME_LOCATOR;
+    }
+
+    @Override
+    protected String getTrackArtistLocator() {
+        return TRACK_ARTIST_LOCATOR;
     }
 
     @Override

@@ -1,21 +1,54 @@
 package pages.music.tracks;
 
 import com.codeborne.selenide.ElementsCollection;
+import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.actions;
 import com.codeborne.selenide.SelenideElement;
 
-import java.util.LinkedList;
 
+//todo сделать использование констант не через прямой вызов, а через метод, чтобы можно было перегружать только эти
+// методы, а не все методы, которые используют другие константы
 public class BaseMusicTrack {
-    protected static final String TRACK_COVER_LOCATOR = ".//slot[@data-l='t,track']";
-    protected static final String TRACK_NAME_LOCATOR = ".//*[@data-l='t,title']";
-    protected static final String TRACK_ARTIST_LOCATOR = ".//*[@data-l='t,artist']";
-    protected static final String TRACK_ALBUM_LOCATOR = ".//*[@data-l='t,album']";
-    protected static final String TRACK_DURATION_LOCATOR = ".//*[@class='duration']";
+    private static final String TRACK_COVER_LOCATOR = ".//*[@data-l='t,track']";
+    private static final String TRACK_NAME_LOCATOR = ".//*[@data-l='t,title']";
+    private static final String TRACK_ARTIST_LOCATOR = ".//*[@data-l='t,artist']";
+    private static final String TRACK_ALBUM_LOCATOR = ".//*[@data-l='t,album']";
+    private static final String TRACK_DURATION_LOCATOR = ".//*[@class='duration']";
+
+    private static final String TRACK_HIDDEN_MENU_LOCATOR = ".//*[@data-l='t,track-actions']";
+    private static final String TRACK_HIDDEN_MENU_POST_STATUS_LOCATOR = ".//*[@data-l='t,post-status']";
     protected SelenideElement track;
 
     public BaseMusicTrack(SelenideElement track) {
         this.track = track;
+    }
+
+    protected String getTrackCoverLocator() {
+        return TRACK_COVER_LOCATOR;
+    }
+
+    protected String getTrackNameLocator() {
+        return TRACK_NAME_LOCATOR;
+    }
+
+    protected String getTrackArtistLocator() {
+        return TRACK_ARTIST_LOCATOR;
+    }
+
+    protected String getTrackAlbumLocator() {
+        return TRACK_ALBUM_LOCATOR;
+    }
+
+    protected String getTrackDurationLocator() {
+        return TRACK_DURATION_LOCATOR;
+    }
+
+    protected String getTrackHiddenMenuLocator() {
+        return TRACK_HIDDEN_MENU_LOCATOR;
+    }
+
+    protected String getTrackHiddenMenuPostStatusLocator() {
+        return TRACK_HIDDEN_MENU_POST_STATUS_LOCATOR;
     }
 
     public TrackData getTrackData() {
@@ -27,7 +60,7 @@ public class BaseMusicTrack {
     }
 
     public BaseMusicTrack clickOnCover() {
-        track.$x(TRACK_COVER_LOCATOR).click();
+        track.$x(getTrackCoverLocator()).click();
         return this;
     }
 
@@ -41,11 +74,11 @@ public class BaseMusicTrack {
     }
 
     public String getTitle() {
-        return track.$x(TRACK_NAME_LOCATOR).getText();
+        return track.$x(getTrackNameLocator()).getText();
     }
 
     public String getArtist() {
-        ElementsCollection selenideElements = track.$$x(TRACK_ARTIST_LOCATOR);
+        ElementsCollection selenideElements = track.$$x(getTrackArtistLocator());
         StringBuilder result = new StringBuilder();
         for (SelenideElement selenideElement : selenideElements) {
             result.append(selenideElement.getText());
@@ -54,10 +87,16 @@ public class BaseMusicTrack {
     }
 
     public String getAlbum() {
-        return track.$x(TRACK_ALBUM_LOCATOR).getText();
+        return track.$x(getTrackAlbumLocator()).getText();
     }
 
     public String getDuration() {
-        return track.$x(TRACK_DURATION_LOCATOR).getText();
+        return track.$x(getTrackDurationLocator()).getText();
+    }
+
+    public BaseMusicTrack addToStatus() {
+        track.hover().$x(getTrackHiddenMenuLocator()).click();
+        $x(getTrackHiddenMenuPostStatusLocator()).click();
+        return this;
     }
 }
