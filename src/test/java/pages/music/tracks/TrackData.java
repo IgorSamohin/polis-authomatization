@@ -3,9 +3,11 @@ package pages.music.tracks;
 import com.google.common.base.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
 @AllArgsConstructor
+@ToString
 public class TrackData {
     public final String title;
     public final String artist;

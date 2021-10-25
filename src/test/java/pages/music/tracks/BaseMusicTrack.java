@@ -91,7 +91,11 @@ public class BaseMusicTrack {
     }
 
     public String getDuration() {
-        return track.$x(getTrackDurationLocator()).getText();
+        String duration = track.$x(getTrackDurationLocator()).getText();
+        if (duration.length() == 4) {
+            duration = "0" + duration;
+        }
+        return duration;
     }
 
     public BaseMusicTrack addToStatus() {
