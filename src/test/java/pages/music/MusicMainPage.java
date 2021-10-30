@@ -1,5 +1,6 @@
 package pages.music;
 
+import com.codeborne.selenide.Condition;
 import pages.base.LoggedUserBasePage;
 import pages.music.tracks.BaseMusicTrack;
 import pages.music.tracks.MusicTrack;
@@ -9,11 +10,11 @@ import pages.music.util.MusicPlayer;
 import java.lang.reflect.InvocationTargetException;
 
 import static com.codeborne.selenide.Selenide.$x;
-import static com.codeborne.selenide.Selenide.actions;
 
 public class MusicMainPage extends LoggedUserBasePage {
     private final static String GO_TO_MY_MUSIC = "//*[@data-l='t,library' and @data-tsid='library']";
     private final static String GO_TO_MUSIC_FOR_YOU = "//*[@data-l='t,showcase' and @data-tsid='showcase']";
+    private final static String GO_TO_MUSIC_HISTORY = "//*[@data-l='t,history' and @data-tsid='history']";
     private final MusicPlayer player = new MusicPlayer();
 
     /**
@@ -37,9 +38,15 @@ public class MusicMainPage extends LoggedUserBasePage {
 
     public CollectionPage clickOnCollectionPage(String collectionName) {
         $x(GO_TO_MY_MUSIC).click();
-        actions().build().perform();
         $x("//*[@data-l='t,playlist' and div='" + collectionName + "']").click();
         return new CollectionPage();
+    }
+
+    public MusicHistoryPage clickOnMusicHistoryPage() {
+        $x(GO_TO_MY_MUSIC).click();
+        $x(GO_TO_MY_MUSIC).click(); // Для раскрытия списка
+        $x(GO_TO_MUSIC_HISTORY).shouldBe(Condition.visible).click();
+        return new MusicHistoryPage();
     }
 
     public MusicSearchPage search(String trackName) {

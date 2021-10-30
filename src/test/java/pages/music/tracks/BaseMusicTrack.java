@@ -92,6 +92,16 @@ public class BaseMusicTrack {
         return clickOnCover();
     }
 
+    public BaseMusicTrack clickOnCover(int time) throws InterruptedException {
+        track.$x(getTrackCoverLocator()).click();
+        Thread.sleep(time);
+        return this;
+    }
+
+    public BaseMusicTrack play(int time) throws InterruptedException {
+        return clickOnCover(time);
+    }
+
     public BaseMusicTrack pause() {
         return clickOnCover();
     }
