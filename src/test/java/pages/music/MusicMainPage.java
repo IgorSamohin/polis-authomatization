@@ -1,8 +1,6 @@
 package pages.music;
 
 import pages.base.LoggedUserBasePage;
-
-import static com.codeborne.selenide.Selenide.$x;
 import pages.music.tracks.BaseMusicTrack;
 import pages.music.tracks.MusicTrack;
 import pages.music.tracks.TrackData;
@@ -10,10 +8,13 @@ import pages.music.util.MusicPlayer;
 
 import java.lang.reflect.InvocationTargetException;
 
+import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Selenide.actions;
+
 public class MusicMainPage extends LoggedUserBasePage {
-    private final MusicPlayer player = new MusicPlayer();
     private final static String GO_TO_MY_MUSIC = "//*[@data-l='t,library' and @data-tsid='library']";
     private final static String GO_TO_MUSIC_FOR_YOU = "//*[@data-l='t,showcase' and @data-tsid='showcase']";
+    private final MusicPlayer player = new MusicPlayer();
 
     /**
      * Returns list of tracks on a page. MusicTrack is default element's type.
@@ -32,6 +33,13 @@ public class MusicMainPage extends LoggedUserBasePage {
     public ForYouMusicPage clickOnMusicForYou() {
         $x(GO_TO_MUSIC_FOR_YOU).click();
         return new ForYouMusicPage();
+    }
+
+    public CollectionPage clickOnCollectionPage(String collectionName) {
+        $x(GO_TO_MY_MUSIC).click();
+        actions().build().perform();
+        $x("//*[@data-l='t,playlist' and div='" + collectionName + "']").click();
+        return new CollectionPage();
     }
 
     public MusicSearchPage search(String trackName) {

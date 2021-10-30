@@ -1,9 +1,10 @@
 package pages.music.tracks;
 
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.SelenideElement;
+
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.actions;
-import com.codeborne.selenide.SelenideElement;
 
 
 //todo сделать использование констант не через прямой вызов, а через метод, чтобы можно было перегружать только эти
@@ -17,6 +18,12 @@ public class BaseMusicTrack {
 
     private static final String TRACK_HIDDEN_MENU_LOCATOR = ".//*[@data-l='t,track-actions']";
     private static final String TRACK_HIDDEN_MENU_POST_STATUS_LOCATOR = ".//*[@data-l='t,post-status']";
+
+    private static final String TRACK_HIDDEN_MENU_ADD_TO_COLLECTION = ".//*[@data-l='t,collections-entry']";
+    private static final String TRACK_HIDDEN_MENU_CREATE_COLLECTION = ".//*[@data-l='t,create-playlist']";
+    private static final String TRACK_HIDDEN_MENU_CREATE_COLLECTION_INPUT = "//*[@data-tsid='input_name_playlist']";
+    private static final String TRACK_HIDDEN_MENU_CREATE_COLLECTION_SUBMIT = "//*[@data-l='t,create-playlist-create']";
+
     protected SelenideElement track;
 
     public BaseMusicTrack(SelenideElement track) {
@@ -49,6 +56,22 @@ public class BaseMusicTrack {
 
     protected String getTrackHiddenMenuPostStatusLocator() {
         return TRACK_HIDDEN_MENU_POST_STATUS_LOCATOR;
+    }
+
+    protected String getTrackHiddenMenuAddToCollection() {
+        return TRACK_HIDDEN_MENU_ADD_TO_COLLECTION;
+    }
+
+    protected String getTrackHiddenMenuCreateCollection() {
+        return TRACK_HIDDEN_MENU_CREATE_COLLECTION;
+    }
+
+    protected String getTrackHiddenMenuCreateCollectionInput() {
+        return TRACK_HIDDEN_MENU_CREATE_COLLECTION_INPUT;
+    }
+
+    protected String getTrackHiddenMenuCreateCollectionSubmit() {
+        return TRACK_HIDDEN_MENU_CREATE_COLLECTION_SUBMIT;
     }
 
     public TrackData getTrackData() {
@@ -101,6 +124,15 @@ public class BaseMusicTrack {
     public BaseMusicTrack addToStatus() {
         track.hover().$x(getTrackHiddenMenuLocator()).click();
         $x(getTrackHiddenMenuPostStatusLocator()).click();
+        return this;
+    }
+
+    public BaseMusicTrack addTrackToNewCollection(String collectionName) {
+        track.hover().$x(getTrackHiddenMenuLocator()).click();
+        $x(getTrackHiddenMenuAddToCollection()).click();
+        $x(getTrackHiddenMenuCreateCollection()).click();
+        $x(getTrackHiddenMenuCreateCollectionInput()).setValue(collectionName);
+        $x(getTrackHiddenMenuCreateCollectionSubmit()).click();
         return this;
     }
 }

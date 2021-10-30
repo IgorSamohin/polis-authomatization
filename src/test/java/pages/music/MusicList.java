@@ -2,6 +2,8 @@ package pages.music;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import pages.music.tracks.BaseMusicTrack;
+import pages.music.tracks.TrackData;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -9,8 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.codeborne.selenide.Selenide.$$x;
-import pages.music.tracks.BaseMusicTrack;
-import pages.music.tracks.TrackData;
 
 public class MusicList<T extends BaseMusicTrack> extends MusicMainPage {
     private static final String MUSIC_LIST = "//wm-tracks-list//wm-track";
@@ -36,8 +36,6 @@ public class MusicList<T extends BaseMusicTrack> extends MusicMainPage {
 
     public boolean findBy(TrackData trackData) {
         for (BaseMusicTrack track : list) {
-            //Чтобы текста песен совпадали нужно чтоли и там и там был hover на них, либо его не было нигде
-            //Я решил сделать, чтобы он был и там и там
             track.hover();
             if (trackData.equals(track.getTrackData())) {
                 return true;
