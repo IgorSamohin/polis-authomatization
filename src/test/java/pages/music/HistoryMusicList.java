@@ -25,10 +25,7 @@ public class HistoryMusicList<T extends BaseMusicTrack> extends MusicMainPage {
         }
     }
 
-    public BaseMusicTrack getTrack(int index) throws InterruptedException {
-        //При получении песни из истории не успевает считаться весь список песен, из-за чего вылетает OutOfBoundsException
-        //Из-за этого пришлось поставить задержку, чтобы список успел подгрузиться
-        Thread.sleep(3000);
+    public BaseMusicTrack getTrack(int index) {
         return list.get(index);
     }
 }
