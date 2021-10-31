@@ -6,11 +6,9 @@ import org.junit.jupiter.api.Test;
 import pages.UserMainPage;
 import pages.music.MusicMainPage;
 
-import java.lang.reflect.InvocationTargetException;
-
 import static com.codeborne.selenide.Selenide.open;
 
-public class CollectionTest extends TestBase {
+public class MusicCollectionTest extends MusicTestBase {
     /**
      * Заходит в "Музыку" → в раздел "Для вас"
      * <p>
@@ -28,9 +26,8 @@ public class CollectionTest extends TestBase {
     private final static String collectionName = "New collection";
 
     @Test
-    public void collectionCreate() throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        MusicMainPage mainMusicPage = ((MusicMainPage) new UserMainPage()
-                .clickOnMusicMainPage());
+    public void collectionCreate() throws NoSuchMethodException {
+        MusicMainPage mainMusicPage = new MusicMainPage();
 
         String trackName = mainMusicPage
                 .clickOnMusicForYou()

@@ -4,13 +4,16 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pages.UserMainPage;
+import pages.music.ForYouMusicPage;
+import pages.music.HistoryMusicList;
+import pages.music.MusicList;
 import pages.music.MusicMainPage;
 
-import java.lang.reflect.InvocationTargetException;
-
 import static com.codeborne.selenide.Selenide.open;
+import pages.music.tracks.BaseMusicTrack;
+import pages.music.tracks.MusicTrack;
 
-public class HistoryTest extends TestBase {
+public class MusicHistoryTest extends MusicTestBase {
 
     /**
      * Заходит в "Музыку" -> в раздел "Для вас"
@@ -24,21 +27,25 @@ public class HistoryTest extends TestBase {
      * Проверяет, что в истории отображается прослушанный трек
      */
     @Test
-    public void historyTest() throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException, InterruptedException {
-        MusicMainPage mainMusicPage = ((MusicMainPage) new UserMainPage()
-                .clickOnMusicMainPage());
+    public void historyTest() throws NoSuchMethodException {
+        ForYouMusicPage forYouMusicPage = new MusicMainPage()
+                .clickOnMusicForYou();
 
-        String trackName = mainMusicPage.clickOnMusicForYou()
-                .getMusicList()
+        MusicList<? extends BaseMusicTrack> musicList = forYouMusicPage
+                .getMusicList();
+
+        String trackName = musicList
                 .getTrack(0)
-                .play(30000)
+                .play(31000)
                 .pause()
                 .getTitle();
 
-        String historyTrackName = mainMusicPage.clickOnMyMusic()
+        HistoryMusicList<MusicTrack> list = forYouMusicPage
+                .clickOnMyMusic()
                 .clickOnMusicHistoryPage()
-                .getHistoryMusicList()
-                .getTrack(0)
+                .getHistoryMusicList();
+
+        String historyTrackName = list.getTrack(0)
                 .getTitle();
 
         Assertions.assertEquals(trackName, historyTrackName);

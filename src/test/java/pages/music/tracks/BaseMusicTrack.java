@@ -1,14 +1,12 @@
 package pages.music.tracks;
 
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.actions;
 
-
-//todo сделать использование констант не через прямой вызов, а через метод, чтобы можно было перегружать только эти
-// методы, а не все методы, которые используют другие константы
 public class BaseMusicTrack {
     private static final String TRACK_COVER_LOCATOR = ".//*[@data-l='t,track']";
     private static final String TRACK_NAME_LOCATOR = ".//*[@data-l='t,title']";
@@ -75,11 +73,17 @@ public class BaseMusicTrack {
     }
 
     public TrackData getTrackData() {
-        return new TrackData(getTitle(), getArtist(), getAlbum(), getDuration());
+        String duration = getDuration();
+        hover();
+        return new TrackData(getTitle(), getArtist(), getAlbum(), duration);
     }
 
     public void hover() {
         actions().moveToElement(track).build().perform();
+    }
+
+    public void unhover() {
+        actions().moveToElement(track.parent().parent(), 0, 0).build().perform();
     }
 
     public BaseMusicTrack clickOnCover() {
@@ -92,14 +96,10 @@ public class BaseMusicTrack {
         return clickOnCover();
     }
 
-    public BaseMusicTrack clickOnCover(int time) throws InterruptedException {
-        track.$x(getTrackCoverLocator()).click();
-        Thread.sleep(time);
-        return this;
-    }
-
-    public BaseMusicTrack play(int time) throws InterruptedException {
-        return clickOnCover(time);
+    public BaseMusicTrack play(int time) {
+        BaseMusicTrack baseMusicTrack = clickOnCover();
+        Selenide.sleep(time);
+        return baseMusicTrack;
     }
 
     public BaseMusicTrack pause() {

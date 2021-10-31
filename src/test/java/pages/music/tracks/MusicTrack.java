@@ -1,7 +1,6 @@
 package pages.music.tracks;
 
 import static com.codeborne.selenide.Selenide.$x;
-import static com.codeborne.selenide.Selenide.actions;
 import com.codeborne.selenide.SelenideElement;
 
 public class MusicTrack extends BaseMusicTrack {
@@ -12,7 +11,8 @@ public class MusicTrack extends BaseMusicTrack {
     }
 
     public void addTrackToFavorite() {
-        actions().moveToElement(track).build().perform();
+        hover();
         $x(ADD_MUSIC_TO_MY_MUSIC).click();
+        unhover();
     }
 }

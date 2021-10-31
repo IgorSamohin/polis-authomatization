@@ -1,13 +1,12 @@
 package pages.music;
 
 import com.codeborne.selenide.Condition;
+import static com.codeborne.selenide.Selenide.sleep;
 import pages.base.LoggedUserBasePage;
 import pages.music.tracks.BaseMusicTrack;
 import pages.music.tracks.MusicTrack;
 import pages.music.tracks.TrackData;
 import pages.music.util.MusicPlayer;
-
-import java.lang.reflect.InvocationTargetException;
 
 import static com.codeborne.selenide.Selenide.$x;
 
@@ -21,8 +20,7 @@ public class MusicMainPage extends LoggedUserBasePage {
      * Returns list of tracks on a page. MusicTrack is default element's type.
      * Override it if you need other type of elements in the list.
      */
-    public MusicList<? extends BaseMusicTrack> getMusicList()
-            throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+    public MusicList<? extends BaseMusicTrack> getMusicList() throws NoSuchMethodException {
         return new MusicList<>(MusicTrack.class);
     }
 
@@ -59,6 +57,7 @@ public class MusicMainPage extends LoggedUserBasePage {
 
     public MusicMainPage clickOnNextTrackButton() {
         player.clickOnNextTrackButton();
+        sleep(500);//todo у брать это безобразие (следующая песня не успевает подгружаться)
         return new MusicMainPage();
     }
 

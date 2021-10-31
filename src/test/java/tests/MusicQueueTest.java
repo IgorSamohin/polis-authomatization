@@ -9,11 +9,10 @@ import pages.music.MusicQueuePage;
 import pages.music.tracks.BaseMusicTrack;
 import pages.music.tracks.TrackData;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MusicQueueTest extends TestBase {
+public class MusicQueueTest extends MusicTestBase {
 
     /**
      * Заходит в "Музыку" -> в раздел "Для вас";
@@ -28,10 +27,8 @@ public class MusicQueueTest extends TestBase {
      * идет следующим в очереди.
      */
     @Test
-    public void queueTest()
-            throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
-        MusicMainPage forYouPage = ((MusicMainPage) new UserMainPage()
-                .clickOnMusicMainPage())
+    public void queueTest() throws NoSuchMethodException {
+        MusicMainPage forYouPage = new MusicMainPage()
                 .clickOnMusicForYou();
 
         forYouPage
@@ -53,6 +50,7 @@ public class MusicQueueTest extends TestBase {
         MusicQueuePage musicQueuePage = new MusicQueuePage();
         for (TrackData trackData : tracksData) {
             TrackData currentTrackData = musicQueuePage.getCurrentTrackData();
+            trackData = new TrackData(trackData.title, trackData.artist, "", trackData.duration);
 
             if (!trackData.equals(currentTrackData)) {
                 System.out.println("");
@@ -61,5 +59,4 @@ public class MusicQueueTest extends TestBase {
             musicQueuePage.clickOnNextTrackButton();
         }
     }
-
 }

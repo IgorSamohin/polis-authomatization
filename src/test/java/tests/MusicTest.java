@@ -9,20 +9,19 @@ import pages.music.MusicMainPage;
 import pages.music.tracks.MusicTrack;
 import pages.music.tracks.TrackData;
 
-class MusicTest extends TestBase {
+class MusicTest extends MusicTestBase {
 
     @Test
     public void addSongToMyMusic() throws Exception {
-        MusicMainPage musicMainPage = (MusicMainPage) new UserMainPage()
-                .clickOnMusicMainPage();
+        MusicMainPage musicMainPage = new MusicMainPage();
 
         MusicTrack track = (MusicTrack) musicMainPage
                 .clickOnMusicForYou()
                 .getMusicList()
                 .getTrack(0);
 
-        track.addTrackToFavorite();
         TrackData trackData = track.getTrackData();
+        track.addTrackToFavorite();
 
         Assertions.assertTrue(musicMainPage
                 .clickOnMyMusic()

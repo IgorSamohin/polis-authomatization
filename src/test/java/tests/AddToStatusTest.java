@@ -13,14 +13,10 @@ import pages.music.tracks.TrackFromUserStatus;
 import pages.profile.ProfileStatus;
 import pages.profile.UserProfilePage;
 
-import java.lang.reflect.InvocationTargetException;
-
-public class AddToStatusTest extends TestBase {
+public class AddToStatusTest extends MusicTestBase {
     @Test
-    public void addMusicToStatus()
-            throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
-        BaseMusicTrack track = ((MusicMainPage) new UserMainPage()
-                .clickOnMusicMainPage())
+    public void addMusicToStatus() throws  NoSuchMethodException {
+        BaseMusicTrack track = new MusicMainPage()
                 .clickOnMusicForYou()
                 .getMusicList()
                 .getTrack(0);

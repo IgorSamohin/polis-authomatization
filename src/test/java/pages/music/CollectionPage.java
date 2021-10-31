@@ -2,8 +2,6 @@ package pages.music;
 
 import pages.music.tracks.MusicTrack;
 
-import java.lang.reflect.InvocationTargetException;
-
 import static com.codeborne.selenide.Selenide.$x;
 
 public class CollectionPage extends MusicMainPage {
@@ -11,8 +9,7 @@ public class CollectionPage extends MusicMainPage {
     private final static String DELETE_COLLECTION = "//*[@data-l='t,remove']";
     private final static String CONFIRM_DELETE = "//*[@data-l='t,submit' and @role='primary']";
 
-    public MusicList<MusicTrack> getCollectionMusicList()
-            throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+    public MusicList<MusicTrack> getCollectionMusicList() throws NoSuchMethodException {
         return new MusicList<>(MusicTrack.class);
     }
 

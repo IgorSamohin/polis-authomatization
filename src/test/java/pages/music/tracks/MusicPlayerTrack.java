@@ -1,6 +1,5 @@
 package pages.music.tracks;
 
-import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 
 import java.util.Date;
@@ -10,7 +9,7 @@ public class MusicPlayerTrack extends BaseMusicTrack {
 
     private static final String TRACK_COVER_LOCATOR = ".//*[@class='cover']";
     private static final String TRACK_NAME_LOCATOR = ".//*[@data-l='t,name']";
-    private static final String TRACK_ARTIST_LOCATOR = ".//*[@data-l='t,artists']";
+    private static final String TRACK_ARTIST_LOCATOR = ".//*[@class='artist']";
 
     public MusicPlayerTrack(SelenideElement track) {
         super(track);
