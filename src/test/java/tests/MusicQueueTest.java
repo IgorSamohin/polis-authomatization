@@ -2,8 +2,6 @@ package tests;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import pages.UserMainPage;
-import pages.music.MusicList;
 import pages.music.MusicMainPage;
 import pages.music.MusicQueuePage;
 import pages.music.tracks.BaseMusicTrack;
@@ -13,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MusicQueueTest extends MusicTestBase {
+
+    public static final int QUEUE_LENGTH = 5;
 
     /**
      * Заходит в "Музыку" -> в раздел "Для вас";
@@ -37,14 +37,18 @@ public class MusicQueueTest extends MusicTestBase {
                 .play()
                 .pause();
 
-        MusicList<? extends BaseMusicTrack> musicList = forYouPage
+        List<? extends BaseMusicTrack> musicList = forYouPage
                 .goToQueuePage()
-                .getMusicList();
+                .getMusicList()
+                .getList();
+
 
         Assertions.assertNotEquals(0, musicList.size());
-        List<TrackData> tracksData = new ArrayList<>(musicList.size());
-        for (int i = 0; i < musicList.size(); i++) {
-            tracksData.add(musicList.getTrack(i).getTrackData());
+        int size = Math.min(musicList.size(), QUEUE_LENGTH);
+        List<TrackData> tracksData = new ArrayList<>(size);
+        for (int i = 0; i < size; i++) {
+            BaseMusicTrack track = musicList.get(i);
+            tracksData.add(track.getTrackData());
         }
 
         MusicQueuePage musicQueuePage = new MusicQueuePage();
@@ -52,9 +56,6 @@ public class MusicQueueTest extends MusicTestBase {
             TrackData currentTrackData = musicQueuePage.getCurrentTrackData();
             trackData = new TrackData(trackData.title, trackData.artist, "", trackData.duration);
 
-            if (!trackData.equals(currentTrackData)) {
-                System.out.println("");
-            }
             Assertions.assertEquals(trackData, currentTrackData);
             musicQueuePage.clickOnNextTrackButton();
         }

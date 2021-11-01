@@ -1,5 +1,6 @@
 package pages.music;
 
+import static com.codeborne.selenide.Condition.*;
 import com.codeborne.selenide.ElementsCollection;
 import static com.codeborne.selenide.Selenide.sleep;
 import com.codeborne.selenide.SelenideElement;
@@ -24,11 +25,19 @@ public class MusicList<T extends BaseMusicTrack> extends MusicMainPage {
         this.constructor = impl.getDeclaredConstructor(SelenideElement.class);
     }
 
-    private List<T> getList() {
+    public List<T> getList() {
         ElementsCollection selenideElements = $$x(getMusicListLocator());
+        if (selenideElements.size() == 0) {
+            sleep(500); //ждем, чтобы лист подгрузился
+            selenideElements = $$x(getMusicListLocator());
+        }
+        assert selenideElements.size() != 0;
 
         ArrayList<T> list = new ArrayList<>(selenideElements.size());
         for (SelenideElement element : selenideElements) {
+            if (element.is(not(visible))) {
+                break;
+            }
             T track = null;
             try {
                 track = constructor.newInstance(element);
@@ -45,6 +54,9 @@ public class MusicList<T extends BaseMusicTrack> extends MusicMainPage {
         return MUSIC_LIST;
     }
 
+    /**
+     * Be careful. This method load all list to get the track
+     */
     public BaseMusicTrack getTrack(int index) {
         return getList().get(index);
     }
@@ -54,7 +66,6 @@ public class MusicList<T extends BaseMusicTrack> extends MusicMainPage {
     }
 
     public boolean findBy(TrackData trackData) {
-        sleep(100);//todo у брать это безобразие (список не успевает подгружаться)
         for (BaseMusicTrack track : getList()) {
             TrackData trackData1 = track.getTrackData();
             if (trackData.equals(trackData1)) {

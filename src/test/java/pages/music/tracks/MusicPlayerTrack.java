@@ -1,5 +1,6 @@
 package pages.music.tracks;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 
 import java.util.Date;
@@ -10,6 +11,8 @@ public class MusicPlayerTrack extends BaseMusicTrack {
     private static final String TRACK_COVER_LOCATOR = ".//*[@class='cover']";
     private static final String TRACK_NAME_LOCATOR = ".//*[@data-l='t,name']";
     private static final String TRACK_ARTIST_LOCATOR = ".//*[@class='artist']";
+    private static final String THUMB_LOCATOR = ".//wm-player-duration//*[@class='thumb']";
+    public static final int TIME_LENGTH = 5;
 
     public MusicPlayerTrack(SelenideElement track) {
         super(track);
@@ -17,12 +20,8 @@ public class MusicPlayerTrack extends BaseMusicTrack {
 
     @Override
     public String getDuration() {
-        String duration = track.$x(getTrackDurationLocator()).getAttribute("duration");
-        assert duration != null;
-
-        int i = (int) Double.parseDouble(duration);
-        Date time = new Date(i * 1000L);
-        return String.format("%tM:%tS", time, time);
+        String duration = track.$x(THUMB_LOCATOR).should(Condition.exist).innerText();
+        return duration.substring(duration.length() - TIME_LENGTH);
     }
 
     @Override

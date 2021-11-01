@@ -79,7 +79,7 @@ public class BaseMusicTrack {
     }
 
     public void hover() {
-        actions().moveToElement(track).build().perform();
+        track.hover();
     }
 
     public void unhover() {

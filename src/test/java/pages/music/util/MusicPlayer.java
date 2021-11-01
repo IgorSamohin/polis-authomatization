@@ -1,5 +1,6 @@
 package pages.music.util;
 
+import com.codeborne.selenide.Condition;
 import static com.codeborne.selenide.Selenide.$x;
 import com.codeborne.selenide.SelenideElement;
 import pages.base.BasePage;
@@ -20,6 +21,9 @@ public class MusicPlayer extends BasePage {
     public final static String GO_TO_QUEUE_BUTTON_LOCATOR = "//*[@data-tsid='current_playlist']";
     public final static String SEARCH_FIELD_LOCATOR = "//*[@data-tsid='inner_input']";
 
+    public final static String THUMB_CNT_LOCATOR = "//*[@class='thumb-cnt']";
+    public final static String THUMB_RELATIVE_LOCATOR = ".//*[@class='thumb']";
+
     public final static String CURRENT_TRACK_LOCATOR = "//*[@data-tsid='playing_track']//wm-card-details";
 
     public MusicSearchPage search(String trackName) {
@@ -33,6 +37,7 @@ public class MusicPlayer extends BasePage {
 
     public void clickOnNextTrackButton() {
         $x(FORWARD_BUTTON_LOCATOR).click();
+        $x(THUMB_RELATIVE_LOCATOR).should(Condition.exist);
     }
 
     public void clickOnPlayPauseButton() {

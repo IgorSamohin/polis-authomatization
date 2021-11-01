@@ -57,13 +57,12 @@ public class MusicMainPage extends LoggedUserBasePage {
 
     public MusicMainPage clickOnNextTrackButton() {
         player.clickOnNextTrackButton();
-        sleep(500);//todo у брать это безобразие (следующая песня не успевает подгружаться)
-        return new MusicMainPage();
+        return this;
     }
 
     public MusicMainPage clickOnPlayPauseButton() {
         player.clickOnPlayPauseButton();
-        return new MusicMainPage();
+        return this;
     }
 
     public MusicQueuePage goToQueuePage() {

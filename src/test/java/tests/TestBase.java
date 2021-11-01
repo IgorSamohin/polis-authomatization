@@ -1,7 +1,9 @@
 package tests;
 
+import com.codeborne.selenide.Configuration;
 import static com.codeborne.selenide.Selenide.closeWebDriver;
 import static com.codeborne.selenide.Selenide.open;
+import com.codeborne.selenide.SelenideConfig;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import pages.LoginPage;
@@ -13,6 +15,7 @@ public class TestBase {
 
     @BeforeEach
     public void before() {
+        Configuration.startMaximized = true;
         open(OK_RU_URL);
         Bots bot = Bots.getBot();
         LoginPage currentPage = new LoginPage();
